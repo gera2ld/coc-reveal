@@ -44,3 +44,14 @@ command! -range=% RevealIt CocCommand reveal.it <line1> <line2>
 ```
 
 Now you have the `:RevealIt` command to create slides, either from the whole file or selected lines.
+
+### Front matter
+
+You can change the default options in front matter:
+
+```markdown
+---
+title: The title of my slides
+author: Me
+---
+```
