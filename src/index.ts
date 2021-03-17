@@ -82,6 +82,10 @@ async function createReveal(options: {
 async function revealIt(content: string, options?: any): Promise<void> {
   const { nvim } = workspace;
   const input = await nvim.eval('expand("%:p")') as string;
+  options = {
+    open: true,
+    ...options,
+  };
   if (options.watch) {
     // TODO
   } else {
@@ -89,6 +93,7 @@ async function revealIt(content: string, options?: any): Promise<void> {
     createReveal({
       content,
       output: basename && `${basename}.html`,
+      open: options.open,
     });
   }
 }
@@ -119,6 +124,7 @@ export function activate(context: ExtensionContext): void {
       const options: any = {};
       for (const arg of args) {
         if (['-w', '--watch'].includes(arg)) options.watch = true;
+        else if (['--no-open'].includes(arg)) options.open = false;
         else if (!arg.startsWith('-')) positional.push(arg);
       }
       const [line1, line2] = positional;
