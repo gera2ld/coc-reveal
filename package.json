@@ -38,6 +38,7 @@
   },
   "typings": "types/index.d.ts",
   "dependencies": {
+    "js-yaml": "^4.0.0",
     "open": "^8.0.2"
   },
   "devDependencies": {

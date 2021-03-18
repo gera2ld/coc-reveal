@@ -6,12 +6,7 @@ import {
   commands,
   workspace,
 } from 'coc.nvim';
-
-const TEMPLATE = process.env.TEMPLATE;
-const DEFAULT_META = {
-  title: 'Reveal it',
-  author: 'reveal.js',
-};
+import { buildReveal } from './reveal';
 
 async function getFullText(): Promise<string> {
   const doc = await workspace.document;
@@ -35,46 +30,7 @@ async function createReveal(options: {
   output: string;
   open?: boolean;
 }) {
-  const metaStr = options.content.match(/<!--\s*@meta\s+([\s\S]*?)-->/)?.[1] || '';
-  const meta = metaStr.split('\n')
-    .map(s => {
-      const i = s.indexOf(':');
-      return i >= 0 ? [s.slice(0, i).trim(), s.slice(i + 1).trim()] : null;
-    })
-    .filter(Boolean)
-    .reduce((obj, [key, val]) => ({
-      ...obj,
-      [key]: val,
-    }), DEFAULT_META);
-  const pieces = options.content.split(/(?:^|\n)(#{1,2} .*\n)/);
-  const sections = [];
-  for (let i = 1; i < pieces.length; i += 2) {
-    const heading = pieces[i];
-    const level = heading.match(/^#+|$/)[0].length;
-    const content = pieces[i + 1];
-    sections.push({ level, heading, content });
-  }
-  const data = [];
-  for (const section of sections) {
-    if (section.level === 1 && data.length) {
-      data.push('</section>', '<section>');
-    }
-    data.push(
-      '<section data-markdown>',
-      '<script type="text/template">',
-      section.heading,
-      section.content,
-      '</script>',
-      '</section>',
-    );
-  }
-  data.unshift('<section>');
-  data.push('</section>');
-  const context = {
-    ...meta,
-    slides: data.join('\n'),
-  };
-  const html = TEMPLATE.replace(/{{\s*(\w+)\s*}}/g, (m, g) => context[g] || m);
+  const html = buildReveal(options.content);
   await fs.writeFile(options.output, html);
   if (options.open) open(options.output);
 }
