@@ -12,11 +12,15 @@ export function parseMarkdown(content: string) {
   };
   if (lines[index].trimRight() === '---') {
     const raw = [];
-    for (; index < lines.length; index += 1) {
+    for (index += 1; index < lines.length; index += 1) {
       const line = lines[index].trimRight();
       if (line === '---') {
         index += 1;
-        Object.assign(frontMatter, yaml.load(raw.join('\n')));
+        try {
+          Object.assign(frontMatter, yaml.load(raw.join('\n')));
+        } catch {
+          // noop
+        }
         break;
       }
       raw.push(line);
@@ -24,7 +28,7 @@ export function parseMarkdown(content: string) {
   }
 
   const sections: { level: number; content: string }[] = [];
-  let section: { level: number; lines: string[] };
+  let section: { level: number; lines: string[] } | undefined;
   const closeSection = () => {
     if (!section) return;
     sections.push({
@@ -47,7 +51,7 @@ export function parseMarkdown(content: string) {
       const level = heading[1].length;
       newSection(level);
     }
-    section.lines.push(line);
+    section?.lines.push(line);
   }
   closeSection();
 
