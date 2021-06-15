@@ -7,9 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/dist/theme/black.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/highlight/zenburn.css">
+{{ css }}
 </head>
 <body>
 <div class="reveal">
@@ -17,13 +15,7 @@
     {{ slides }}
   </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/dist/reveal.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/markdown/markdown.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/highlight/highlight.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/math/math.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/notes/notes.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/search/search.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/zoom/zoom.js"></script>
+{{ js }}
 <script>
 const deck = new Reveal({
   plugins: [RevealMarkdown, RevealHighlight, RevealMath, RevealNotes, RevealSearch, RevealZoom],

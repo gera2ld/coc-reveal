@@ -9,6 +9,10 @@ export function parseMarkdown(content: string) {
   const frontMatter = {
     title: 'Reveal it',
     author: 'reveal.js',
+    theme: 'black',
+    highlightTheme: 'zenburn',
+    js: [],
+    css: [],
   };
   if (lines[index].trimRight() === '---') {
     const raw = [];
@@ -25,6 +29,14 @@ export function parseMarkdown(content: string) {
       }
       raw.push(line);
     }
+  }
+
+  if (!Array.isArray(frontMatter.js)) {
+    frontMatter.js = [];
+  }
+
+  if (!Array.isArray(frontMatter.css)) {
+    frontMatter.css = [];
   }
 
   const sections: { level: number; content: string }[] = [];
@@ -75,8 +87,28 @@ export function buildSlides(content: string) {
   }
   data.unshift('<section>');
   data.push('</section>');
+  const jsdelivrPrefix = 'https://cdn.jsdelivr.net/combine/';
+  const revealPrefix = `npm/reveal.js@${process.env.REVEAL_VERSION}/`;
+  const revealCss = [
+    'dist/reveal.css',
+    `dist/theme/${frontMatter.theme}.css`,
+    `plugin/highlight/${frontMatter.highlightTheme}.css`,
+  ].map(s => revealPrefix + s).join(',');
+  frontMatter.css.unshift(jsdelivrPrefix + revealCss);
+  const revealJs = [
+    'dist/reveal.min.js',
+    'plugin/markdown/markdown.js',
+    'plugin/highlight/highlight.js',
+    'plugin/math/math.js',
+    'plugin/notes/notes.js',
+    'plugin/search/search.js',
+    'plugin/zoom/zoom.js',
+  ].map(s => revealPrefix + s).join(',');
+  frontMatter.js.unshift(jsdelivrPrefix + revealJs);
   return {
     ...frontMatter,
+    js: frontMatter.js.map(src => `<script src="${src}"></script>`).join('\n'),
+    css: frontMatter.css.map(href => `<link rel="stylesheet" href="${href}">`).join('\n'),
     revealVersion: process.env.REVEAL_VERSION,
     slides: data.join(''),
   };

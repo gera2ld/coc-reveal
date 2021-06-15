@@ -1,3 +1,4 @@
+import './mock-env';
 import { buildSlides } from '../src/reveal';
 
 test('without front matter', () => {
@@ -40,6 +41,8 @@ test('with front matter', () => {
 ---
 title: 'hello'
 author: it's me
+css:
+  - https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css
 ---
 
 ${content}`;
@@ -47,6 +50,8 @@ ${content}`;
 ---
 title: 'hello'
 author: it's me
+css:
+  - https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css
 ---
 
 should ignore text before first heading
@@ -63,6 +68,11 @@ ${content}`;
   const out = {
     title: 'hello',
     author: 'it\'s me',
+    theme: 'black',
+    highlightTheme: 'zenburn',
+    revealVersion: 'TEST',
+    css: '<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/reveal.js@TEST/dist/reveal.css,npm/reveal.js@TEST/dist/theme/black.css,npm/reveal.js@TEST/plugin/highlight/zenburn.css">\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">',
+    js: '<script src="https://cdn.jsdelivr.net/combine/npm/reveal.js@TEST/dist/reveal.min.js,npm/reveal.js@TEST/plugin/markdown/markdown.js,npm/reveal.js@TEST/plugin/highlight/highlight.js,npm/reveal.js@TEST/plugin/math/math.js,npm/reveal.js@TEST/plugin/notes/notes.js,npm/reveal.js@TEST/plugin/search/search.js,npm/reveal.js@TEST/plugin/zoom/zoom.js"></script>',
     slides,
   };
   expect(buildSlides(md1)).toEqual(out);
