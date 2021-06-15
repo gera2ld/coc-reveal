@@ -12,6 +12,7 @@
     "build:js": "rollup -c rollup.conf.js",
     "build": "run-s ci clean build:js",
     "prepare": "husky install",
+    "prepublishOnly": "run-s build",
     "build:types": "tsc -p tsconfig.prod.json",
     "test": "jest test",
     "test:cov": "jest test --coverage"
