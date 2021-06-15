@@ -7,16 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/black.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/zenburn.css">
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js" async></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/markdown/markdown.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/math/math.js" async></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/notes/notes.js" async></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/search/search.js" async></script>
-<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/zoom/zoom.js" async></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/dist/theme/black.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/highlight/zenburn.css">
 </head>
 <body>
 <div class="reveal">
@@ -24,9 +17,16 @@
     {{ slides }}
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/dist/reveal.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/highlight/highlight.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/math/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/notes/notes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/search/search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@{{ revealVersion }}/plugin/zoom/zoom.js"></script>
 <script>
 const deck = new Reveal({
-   plugins: [ RevealMarkdown ],
+  plugins: [RevealMarkdown, RevealHighlight, RevealMath, RevealNotes, RevealSearch, RevealZoom],
 });
 deck.initialize({
   hash: true,

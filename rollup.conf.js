@@ -1,7 +1,6 @@
 const fs = require('fs');
 const {
   defaultOptions,
-  getRollupExternal,
   getRollupPlugins,
   loadConfigSync,
 } = require('@gera2ld/plaid');
@@ -10,6 +9,7 @@ const pkg = require('./package.json');
 const template = fs.readFileSync('src/template.html', 'utf8');
 const replaceValues = {
   'process.env.TEMPLATE': JSON.stringify(template),
+  'process.env.REVEAL_VERSION': JSON.stringify(require('reveal.js/package.json').version),
 };
 
 const DIST = defaultOptions.distDir;

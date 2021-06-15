@@ -77,6 +77,7 @@ export function buildSlides(content: string) {
   data.push('</section>');
   return {
     ...frontMatter,
+    revealVersion: process.env.REVEAL_VERSION,
     slides: data.join(''),
   };
 }
